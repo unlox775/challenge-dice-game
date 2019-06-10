@@ -1,14 +1,15 @@
 'use strict';
 
+import Turn from './Turn.js';
+import Player from './Player.js';
+
 class Game {
 	constructor(numPlayers) {
 		this.numPlayers = Math.floor(numPlayers);
 
 		this.players = [];
 		for (let playerN = 0 ; playerN < this.numPlayers ; playerN++ ) {
-			let player = {
-				name: `Player ${playerN + 1}`,
-			};
+			let player = new Player(`Player ${playerN + 1}`);
 			this.players.push(player);
 		}
 
@@ -24,11 +25,23 @@ class Game {
 		}
 
 		///  Now generate the flow for all rounds
-		this.players.forEach((player) => {
+		this.players.forEach((player, startingPlayerI) => {
 			let round = {
-				player: player,
+				startingPlayer: player,
 				turns : [],
 			};
+
+			///  Populate this turn
+			let playerOrder = this.players.slice(0);
+			if ( startingPlayerI != 0 ) {
+				let moveToEnd = playerOrder.splice(0,startingPlayerI);
+				playerOrder = playerOrder.concat(moveToEnd);
+			}
+
+			playerOrder.forEach((turnPlayer) => {
+				round.turns.push(new Turn(turnPlayer));
+			});
+
 			this.roundState.push(round);
 		})
 	}
