@@ -23,7 +23,6 @@ function updateGameScoreBoard() {
 }
 
 function updateTurnPanel() {
-
 	let diceStrs = [];
 	turn.keptDice.forEach((dice) => diceStrs.push(`[${dice}]`));
 	$('#dice_kept').html(diceStrs.join(' '));
@@ -34,6 +33,8 @@ function updateTurnPanel() {
 		else                        { diceStrs.push(`<a href="javascript:chooseDice(${i})">[${dice}]</a>`); }
 	});
 	$('#dice_rolled').html(diceStrs.join(' '));
+
+	$('#current_score').html(turn.currentScore());
 }
 
 function showError(message) {
@@ -66,6 +67,7 @@ window.doReRoll = () => {
 		if (e instanceof MustKeepAtLeastOneException) {
 			showError("You must keep at least one dice!");
 		}
+		else { throw e; }
 	}
 
 	updateTurnPanel();

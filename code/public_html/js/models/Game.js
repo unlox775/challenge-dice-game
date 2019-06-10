@@ -60,4 +60,8 @@ export default class Game {
 
 		return this.roundState[this.currentRound].turns[this.currentTurn];
 	}
+
+	endTurn() {
+		
+	}
 }

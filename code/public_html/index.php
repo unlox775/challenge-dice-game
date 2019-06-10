@@ -107,11 +107,15 @@
 					<h5>Your Dice:</h5>
 					<p>
 						<label>Kept:</label>
-						<span id="dice_kept">[3] [3] [4]</span>
+						<span id="dice_kept"> - </span>
 					</p>
 					<p>
 						<label>Rolled (click each dice to choose to re-roll that dice):</label>
-						<span id="dice_rolled">[3] [6]</span>
+						<span id="dice_rolled"> - </span>
+					</p>
+					<p>
+						<label>Current Score:</label>
+						<span id="current_score"> - </span>
 					</p>
 					<p>
 						<label>Actions:</label>
