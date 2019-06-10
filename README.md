@@ -26,6 +26,7 @@ After all four rounds have been completed the player with the lowest combined sc
 # How to Build and Run
 
 **Prerequisites:**
+- Running in a browser with good ES6 support (Chrome preferred)
 - Docker running on your local machine
 - command-line able to run **docker-compose**, and **make**
 - nothing else running on localhost ports 8080, and 27017

@@ -89,11 +89,35 @@
       <main class="mdl-layout__content mdl-color--grey-100">
         <div class="mdl-grid demo-content">
           <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--12-col">
-          	<h5>Hello World</h5>
+          	<h5>Dice Game</h5>
           	
           	<p>
-          		Isn't it nice!
+          		<label>Round:</label>
+          		<span id="round_num">Round 1</span>
           	</p>
+          	<p>
+          		<label>Who's Turn:</label>
+          		<span id="whos_turn">Player 1</span>
+          	</p>
+          	<p>
+          		<label>Score to Beat, this round:</label>
+          		<span id="round_num">14</span>
+          	</p>
+
+          	<h5>Your Dice:</h5>
+          	<p>
+          		<label>Kept:</label>
+          		<span id="round_num">[3] [3] [4]</span>
+          	</p>
+          	<p>
+          		<label>Rolled (click each dice to choose to re-roll that dice):</label>
+          		<span id="round_num">[3] [6]</span>
+          	</p>
+          	<p>
+          		<label>Actions:</label>
+          		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Roll!</button>
+          		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">End My Turn</button>
+          	</p>          	
           </div>
         </div>
       </main>
