@@ -3,9 +3,10 @@
 import Turn from './Turn.js';
 import Player from './Player.js';
 
-class Game {
+export default class Game {
 	constructor(numPlayers) {
 		this.numPlayers = Math.floor(numPlayers);
+		this.gameState = 'not-generated';
 
 		this.players = [];
 		for (let playerN = 0 ; playerN < this.numPlayers ; playerN++ ) {
@@ -14,6 +15,8 @@ class Game {
 		}
 
 		this.roundState = [];
+		this.currentRound = 0;
+		this.currentTurn = 0;
 	}
 
 	start() {
@@ -44,11 +47,17 @@ class Game {
 
 			this.roundState.push(round);
 		})
-	}
 
+		this.gameState = 'generated';
+	}
 
 	getPlayers() {
 		return this.players;
 	}
+
+	getTurn() {
+		if ( this.gameState != 'generated' ) { throw "Game is not Generated yet"; debugger; }
+
+		return this.roundState[this.currentRound].turns[this.currentTurn];
+	}
 }
-export default Game;
