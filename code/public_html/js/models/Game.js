@@ -38,7 +38,4 @@ class Game {
 		return this.players;
 	}
 }
-
-let game = new Game(4);
-game.start();
-console.log(game);
+export default Game;

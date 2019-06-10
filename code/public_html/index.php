@@ -124,7 +124,7 @@
     </div>
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/js/game.js"></script>
+    <script type="module" src="/js/dice_game.js"></script>
   </body>
 </html>
 
