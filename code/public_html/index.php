@@ -110,7 +110,7 @@
 						<span id="dice_kept"> - </span>
 					</p>
 					<p>
-						<label>Rolled (click each dice to choose to re-roll that dice):</label>
+						<label>Rolled (click each dice to re-roll that dice):</label>
 						<span id="dice_rolled"> - </span>
 						&nbsp;
 						&nbsp;

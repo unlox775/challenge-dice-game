@@ -29,15 +29,13 @@ function updateTurnPanel() {
 
 	diceStrs = [];
 	turn.remainingDice.forEach((dice,i) => {
-		if ( turn.toReRollDice[i] ) {  }
-		else                        { diceStrs.push(`<a href="javascript:chooseDice(${i})">[${dice}]</a>`); }
+		if ( ! turn.toReRollDice[i] ) { diceStrs.push(`<a href="javascript:chooseDice(${i})">[${dice}]</a>`); }
 	});
 	$('#dice_rolled').html(diceStrs.join(' '));
 
 	diceStrs = [];
 	turn.remainingDice.forEach((dice,i) => {
 		if ( turn.toReRollDice[i] ) { diceStrs.push(`<a href="javascript:unChooseDice(${i})"><strong>[${dice}]</strong></a>`); }
-		else                        {  }
 	});
 	$('#dice_to_be_rerolled').html(diceStrs.join(' '));
 
