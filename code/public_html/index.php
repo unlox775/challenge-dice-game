@@ -112,6 +112,12 @@
 					<p>
 						<label>Rolled (click each dice to choose to re-roll that dice):</label>
 						<span id="dice_rolled"> - </span>
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						&nbsp;
+						<label>To be Re-Rolled:</label>
+						<span id="dice_to_be_rerolled"> - </span>
 					</p>
 					<p>
 						<label>Current Score:</label>

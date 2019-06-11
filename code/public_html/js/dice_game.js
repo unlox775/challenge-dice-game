@@ -1,7 +1,7 @@
 'use strict';
 
 import Game from './models/Game.js';
-import {MustKeepAtLeastOneException} from './models/Turn.js';
+import {MustKeepAtLeastOneException, EndTurnInsteadOfKeepingAllException} from './models/Turn.js';
 
 
 let turn = null;
@@ -29,10 +29,17 @@ function updateTurnPanel() {
 
 	diceStrs = [];
 	turn.remainingDice.forEach((dice,i) => {
-		if ( turn.toReRollDice[i] ) { diceStrs.push(`<a href="javascript:unChooseDice(${i})"><strong>[${dice}]</strong></a>`); }
+		if ( turn.toReRollDice[i] ) {  }
 		else                        { diceStrs.push(`<a href="javascript:chooseDice(${i})">[${dice}]</a>`); }
 	});
 	$('#dice_rolled').html(diceStrs.join(' '));
+
+	diceStrs = [];
+	turn.remainingDice.forEach((dice,i) => {
+		if ( turn.toReRollDice[i] ) { diceStrs.push(`<a href="javascript:unChooseDice(${i})"><strong>[${dice}]</strong></a>`); }
+		else                        {  }
+	});
+	$('#dice_to_be_rerolled').html(diceStrs.join(' '));
 
 	$('#current_score').html(turn.currentScore());
 }
@@ -64,9 +71,8 @@ window.doReRoll = () => {
 	try {
 		turn.runReRoll();
 	} catch (e) {
-		if (e instanceof MustKeepAtLeastOneException) {
-			showError("You must keep at least one dice!");
-		}
+		if (e instanceof MustKeepAtLeastOneException        ) { showError("You must keep at least one dice!"); }
+		if (e instanceof EndTurnInsteadOfKeepingAllException) { showError("First Choose a Dice.  Then click the Roll button."); }
 		else { throw e; }
 	}
 
