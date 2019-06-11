@@ -78,7 +78,8 @@
 						<span class="visuallyhidden">Accounts</span>
 					</button>
 					<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-						<li class="mdl-menu__item"><a href="http://github.com/unlox775/">Dave's Github</a></li>
+						<li class="mdl-menu__item"><a href="https://github.com/unlox775/">Dave's Github</a></li>
+						<li class="mdl-menu__item"><a href="https://github.com/unlox775/challenge-dice-game">This Code Repository</a></li>
 					</ul>
 				</div>
 			</header>
@@ -106,7 +107,7 @@
 
 						<h5>Your Dice: <span id="current_player_name"></span></h5>
 						<p>
-							<strong>Kept:</strong>
+							<strong>Dice Kept:</strong>
 							<span id="dice_kept"> - </span>
 						</p>
 						<p>
