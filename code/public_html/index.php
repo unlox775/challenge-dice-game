@@ -88,20 +88,20 @@
 		</div>
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid demo-content">
-				<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--12-col">
+				<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
 					<h5>
 						Dice Game
 						<button onclick="playGame()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">New Game</button>
 					</h5>
 
-					<div id="game_board" style="display: none">
+					<div class="game_board" style="display: none">
 						<p>
 							<strong>Round:</strong>
 							<span id="round_num"> - </span>
 						</p>
 						<p>
-							<strong>Overall Player Scores:</strong>
-							<span class="overall_player_scores"> - </span>
+							<strong>This Round Scores:</strong>
+							<span class="round_player_scores"> - </span>
 						</p>
 
 						<h5>Your Dice: <span id="current_player_name"></span></h5>
@@ -136,8 +136,8 @@
 						</p>          	
 					</div>
 
-					<div id="game_over_board" style="display: none">
-						<h5>Over!</h5>
+					<div class="game_over_board" style="display: none">
+						<h5>Game Over!</h5>
 
 						<p>
 							<strong>Final Player Scores:</strong>
@@ -145,6 +145,27 @@
 						</p>
 
 						<h2>Winner: <span id="winner_names"></span></h2>
+					</div>
+				</div>
+				<div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
+					<div class="game_board demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop" style="display: none">
+						<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+							<h5>Overall Player Scores:</h5>
+							<p class="overall_player_scores"> - </p>
+						</div>
+					</div>
+					<div class="game_board demo-separator mdl-cell--1-col" style="display: none"></div>
+					<div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
+						<div class="mdl-card__supporting-text mdl-color-text--grey-600">
+							<h5>Game Rules:</h5>
+							<ol style="font-size: 8pt">
+								<li>The player rolls all five dice, then must keep at least one dice but may keep more at her discretion (She can stop on her first roll if she so wishes).</li>
+								<li>Those dice which are not kept are rolled again and each round she must keep at least one more until all the dice are out.</li>
+								<li>Once each player has rolled the player who scored the lowest wins.</li>
+								<li>Repeat for three more rounds in succession so that the next person starts rolling first (at the end each player will have started).</li>
+								<li>After all four rounds have been completed the player with the lowest combined score wins.</li>
+							</ol>
+						</div>
 					</div>
 				</div>
 			</div>

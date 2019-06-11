@@ -21,7 +21,7 @@ export default class Turn {
 	runInitialRoll() {
 		for (let i = 1; i <= 5 ; i++) {
 			this.remainingDice.push(randomRoll());
-			this.toReRollDice.push(false);
+			this.toReRollDice.push(true);
 		}
 	}
 
@@ -43,7 +43,7 @@ export default class Turn {
 		///  Roll the remainingDice
 		this.remainingDice.forEach((v,diceI) => {
 			this.remainingDice[diceI] = randomRoll();
-			this.toReRollDice[diceI] = false;
+			this.toReRollDice[diceI] = true;
 		});
 	}
 

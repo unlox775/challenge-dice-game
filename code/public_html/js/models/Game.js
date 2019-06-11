@@ -59,19 +59,19 @@ export default class Game {
 	}
 
 	getRound() {
-		if ( this.gameState != 'generated' ) { throw "Game must be active and Generated.  Someone called when they should not have"; debugger; }
+		if ( this.gameState == 'not-generated' ) { throw "Game must be active and Generated.  Someone called when they should not have"; }
 
 		return this.roundState[this.currentRound];
 	}
 
 	getTurn() {
-		if ( this.gameState != 'generated' ) { throw "Game must be active and Generated.  Someone called when they should not have"; debugger; }
+		if ( this.gameState == 'not-generated' ) { throw "Game must be active and Generated.  Someone called when they should not have"; }
 
 		return this.roundState[this.currentRound].turns[this.currentTurn];
 	}
 
 	endTurn() {
-		if ( this.gameState != 'generated' ) { throw "Game must be active and Generated.  Someone called when they should not have"; debugger; }
+		if ( this.gameState != 'generated' ) { throw "Game must be active and Generated.  Someone called when they should not have"; }
 
 		if ( this.currentTurn == (this.getRound().turns.length - 1) ) {
 			return this.endRound();
@@ -90,7 +90,7 @@ export default class Game {
 	}
 
 	endRound() {
-		if ( this.gameState != 'generated' ) { throw "Game must be active and Generated.  Someone called when they should not have"; debugger; }
+		if ( this.gameState != 'generated' ) { throw "Game must be active and Generated.  Someone called when they should not have"; }
 
 		// Sum up each Player's combined score
 		this.getRound().turns.forEach((turn) => turn.player.combinedScore += turn.currentScore());
@@ -107,8 +107,5 @@ export default class Game {
 
 	gameOver() {
 		this.gameState = 'over';
-		console.log(this);
 	}
 }
-
-export class MustKeepAtLeastOneException { constructor() { } }

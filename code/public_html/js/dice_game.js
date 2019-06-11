@@ -19,14 +19,14 @@ function init() {
 
 function updateUI() {
 	///  Main Game Panel
-	$('#round_num').html(`Round ${game.currentRound + 1}`);
+	$('#round_num').html(`${game.currentRound + 1}`);
 
 	let overallScoreStrs = [];
 	let winningScore = 10000000;
 	let winningPlayers = [];
 	game.players.forEach((player) => {
 		let currentScore = player.getCurrentOverallScore();
-		overallScoreStrs.push(`<br/>${player.name}: ${currentScore}`);
+		overallScoreStrs.push(`<br/><span>${player.name}: ${currentScore}</span>`);
 
 		if ( currentScore < winningScore ) {
 			winningScore = currentScore;
@@ -39,10 +39,17 @@ function updateUI() {
 	$('.overall_player_scores').html(overallScoreStrs.join(''));
 	$('#winner_names').html(winningPlayers.join(' <em>and</em> '));
 
-	if ( game.gameState == 'over' ) {
-		$('#game_board').hide(); $('#game_over_board').show();
-	}
-	else                            { $('#game_board').show(); $('#game_over_board').hide(); }
+	let roundScoreStrs = [];
+	game.getRound().turns.forEach((turn,turnI) => {
+		if ( turnI == game.currentTurn ) { roundScoreStrs.push('<strong><em>'); }
+		roundScoreStrs.push(`<br/><span>${turn.player.name}: ${turn.currentScore()}</span>`);
+		if ( turnI == game.currentTurn ) { roundScoreStrs.push('</em></strong>'); }
+	});
+	$('.round_player_scores').html(roundScoreStrs.join(''));
+
+
+	if ( game.gameState == 'over' ) { $('.game_board').hide(); $('.game_over_board').show(); }
+	else                            { $('.game_board').show(); $('.game_over_board').hide(); }
 
 
 	///  Turn Panel
