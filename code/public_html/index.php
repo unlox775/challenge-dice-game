@@ -89,45 +89,63 @@
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid demo-content">
 				<div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--12-col">
-					<h5>Dice Game</h5>
+					<h5>
+						Dice Game
+						<button onclick="playGame()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">New Game</button>
+					</h5>
 
-					<p>
-						<label>Round:</label>
-						<span id="round_num"> - </span>
-					</p>
-					<p>
-						<label>Who's Turn:</label>
-						<span id="whos_turn"> - </span>
-					</p>
-					<p>
-						<label>Score to Beat, this round:</label>
-						<span id="score_to_beat"> - </span>
-					</p>
+					<div id="game_board" style="display: none">
+						<p>
+							<strong>Round:</strong>
+							<span id="round_num"> - </span>
+						</p>
+						<p>
+							<strong>Overall Player Scores:</strong>
+							<span class="overall_player_scores"> - </span>
+						</p>
 
-					<h5>Your Dice:</h5>
-					<p>
-						<label>Kept:</label>
-						<span id="dice_kept"> - </span>
-					</p>
-					<p>
-						<label>Rolled (click each dice to re-roll that dice):</label>
-						<span id="dice_rolled"> - </span>
-						&nbsp;
-						&nbsp;
-						&nbsp;
-						&nbsp;
-						<label>To be Re-Rolled:</label>
-						<span id="dice_to_be_rerolled"> - </span>
-					</p>
-					<p>
-						<label>Current Score:</label>
-						<span id="current_score"> - </span>
-					</p>
-					<p>
-						<label>Actions:</label>
-						<button onclick="doReRoll()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Roll!</button>
-						<button onclick="endTurn()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">End My Turn</button>
-					</p>          	
+						<h5>Your Dice: <span id="current_player_name"></span></h5>
+						<p>
+							<strong>Kept:</strong>
+							<span id="dice_kept"> - </span>
+						</p>
+						<p>
+							<strong>To Be Kept:</strong>
+							<span id="dice_rolled"> - </span>
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							<strong>To be Re-Rolled:</strong>
+							<span id="dice_to_be_rerolled"> - </span>
+							<br/><em>(click the dice to change to roll/not-roll)</em>
+						</p>
+						<p>
+							<strong>Current Score:</strong>
+							<span id="current_score"> - </span>
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							<strong>Score to Beat, this round:</strong>
+							<span id="score_to_beat"> - </span>
+						</p>
+						<p>
+							<button id="roll-button" onclick="doReRoll()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Roll!</button>
+							<button onclick="endTurn()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Keep It! End My Turn</button>
+						</p>          	
+					</div>
+
+					<div id="game_over_board" style="display: none">
+						<h5>Over!</h5>
+
+						<p>
+							<strong>Final Player Scores:</strong>
+							<span class="overall_player_scores"> - </span>
+						</p>
+
+						<h2>Winner: <span id="winner_names"></span></h2>
+					</div>
 				</div>
 			</div>
 		</main>

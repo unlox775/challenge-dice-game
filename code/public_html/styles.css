@@ -214,3 +214,9 @@ _:-ms-input-placeholder, :root .demo-graph {
       -ms-flex-align: center;
           align-items: center;
 }
+
+.dice {
+	font-size: 40px;
+	text-decoration: none;
+	color: #000;
+}

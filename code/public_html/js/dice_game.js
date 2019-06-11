@@ -1,45 +1,74 @@
 'use strict';
 
-import Game from './models/Game.js';
-import {MustKeepAtLeastOneException, EndTurnInsteadOfKeepingAllException} from './models/Turn.js';
+import Game, * as G from './models/Game.js';
+import * as T from './models/Turn.js';
 
 
 let turn = null;
 let game = null;
 
+let unicodeDice = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+
 function init() {
 	game = new Game(4);
 	game.start();
 	turn = game.getTurn();
-	updateGameScoreBoard();
 	turn.runInitialRoll();
-	updateTurnPanel();
+	updateUI();
 }
 
-function updateGameScoreBoard() {
+function updateUI() {
+	///  Main Game Panel
 	$('#round_num').html(`Round ${game.currentRound + 1}`);
-	console.log(turn);
-	$('#whos_turn').html( turn.player.name );
-}
 
-function updateTurnPanel() {
+	let overallScoreStrs = [];
+	let winningScore = 10000000;
+	let winningPlayers = [];
+	game.players.forEach((player) => {
+		let currentScore = player.getCurrentOverallScore();
+		overallScoreStrs.push(`<br/>${player.name}: ${currentScore}`);
+
+		if ( currentScore < winningScore ) {
+			winningScore = currentScore;
+			winningPlayers = [player.name];
+		}
+		else if ( currentScore == winningScore ) {
+			winningPlayers.push(player.name);
+		}
+	});
+	$('.overall_player_scores').html(overallScoreStrs.join(''));
+	$('#winner_names').html(winningPlayers.join(' <em>and</em> '));
+
+	if ( game.gameState == 'over' ) {
+		$('#game_board').hide(); $('#game_over_board').show();
+	}
+	else                            { $('#game_board').show(); $('#game_over_board').hide(); }
+
+
+	///  Turn Panel
+	$('#current_player_name').html(turn.player.name);
+
 	let diceStrs = [];
-	turn.keptDice.forEach((dice) => diceStrs.push(`[${dice}]`));
+	turn.keptDice.forEach((dice) => diceStrs.push(`<span class="dice">${unicodeDice[dice-1]}</span>`));
 	$('#dice_kept').html(diceStrs.join(' '));
 
 	diceStrs = [];
 	turn.remainingDice.forEach((dice,i) => {
-		if ( ! turn.toReRollDice[i] ) { diceStrs.push(`<a href="javascript:chooseDice(${i})">[${dice}]</a>`); }
+		if ( ! turn.toReRollDice[i] ) { diceStrs.push(`<a href="javascript:chooseDice(${i})" class="dice">${unicodeDice[dice-1]}</a>`); }
 	});
 	$('#dice_rolled').html(diceStrs.join(' '));
 
 	diceStrs = [];
 	turn.remainingDice.forEach((dice,i) => {
-		if ( turn.toReRollDice[i] ) { diceStrs.push(`<a href="javascript:unChooseDice(${i})"><strong>[${dice}]</strong></a>`); }
+		if ( turn.toReRollDice[i] ) { diceStrs.push(`<a href="javascript:unChooseDice(${i})" class="dice"><strong>${unicodeDice[dice-1]}</strong></a>`); }
 	});
 	$('#dice_to_be_rerolled').html(diceStrs.join(' '));
 
 	$('#current_score').html(turn.currentScore());
+	$('#score_to_beat').html(game.getRound().scoreToBeat || ' - ');
+
+	if ( turn.remainingDice.length == 1 ) { $('#roll-button').hide(); }
+	else                                  { $('#roll-button').show(); }
 }
 
 function showError(message) {
@@ -57,25 +86,42 @@ function showError(message) {
 
 window.chooseDice = (diceI) => {
 	turn.chooseDiceToReRoll(diceI);
-	updateTurnPanel();
+	updateUI();
 }
+
 
 window.unChooseDice = (diceI) => {
 	turn.unChooseDiceToReRoll(diceI);
-	updateTurnPanel();
+	updateUI();
 }
 
 window.doReRoll = () => {
 	try {
 		turn.runReRoll();
 	} catch (e) {
-		if (e instanceof MustKeepAtLeastOneException        ) { showError("You must keep at least one dice!"); }
-		if (e instanceof EndTurnInsteadOfKeepingAllException) { showError("First Choose a Dice.  Then click the Roll button."); }
+		if (e instanceof T.MustKeepAtLeastOneException        ) { showError("You must keep at least one dice!"); }
+		else if (e instanceof T.EndTurnInsteadOfKeepingAllException) { showError("First Choose a Dice.  Then click the Roll button."); }
 		else { throw e; }
 	}
 
-	updateTurnPanel();
+	updateUI();
 }
 
+window.endTurn = () => {
+	try {
+		game.endTurn();
+		if ( game.gameState != 'over' ) {
+			turn = game.getTurn();
+			turn.runInitialRoll();
+		}
+	} catch (e) {
+		if (e instanceof G.MustKeepAtLeastOneException        ) { showError("You must keep at least one dice!"); }
+		// else if (e instanceof G.EndTurnInsteadOfKeepingAllException) { showError("First Choose a Dice.  Then click the Roll button."); }
+		else { throw e; }
+	}
 
-init();
+
+	updateUI();
+}
+
+window.playGame = init;

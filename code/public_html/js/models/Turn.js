@@ -6,6 +6,7 @@ export default class Turn {
 		this.keptDice = [];
 		this.remainingDice = [];
 		this.toReRollDice = [];
+		this.isOver = false;
 	}
 
 	chooseDiceToReRoll(diceI){

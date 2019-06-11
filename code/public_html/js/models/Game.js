@@ -30,7 +30,8 @@ export default class Game {
 		///  Now generate the flow for all rounds
 		this.players.forEach((player, startingPlayerI) => {
 			let round = {
-				startingPlayer: player,
+				startingPlayer : player,
+				scoreToBeat : false,
 				turns : [],
 			};
 
@@ -42,7 +43,9 @@ export default class Game {
 			}
 
 			playerOrder.forEach((turnPlayer) => {
-				round.turns.push(new Turn(turnPlayer));
+				let turn = new Turn(turnPlayer);
+				round.turns.push(turn);
+				turnPlayer.turns.push(turn);
 			});
 
 			this.roundState.push(round);
@@ -55,13 +58,57 @@ export default class Game {
 		return this.players;
 	}
 
+	getRound() {
+		if ( this.gameState != 'generated' ) { throw "Game must be active and Generated.  Someone called when they should not have"; debugger; }
+
+		return this.roundState[this.currentRound];
+	}
+
 	getTurn() {
-		if ( this.gameState != 'generated' ) { throw "Game is not Generated yet"; debugger; }
+		if ( this.gameState != 'generated' ) { throw "Game must be active and Generated.  Someone called when they should not have"; debugger; }
 
 		return this.roundState[this.currentRound].turns[this.currentTurn];
 	}
 
 	endTurn() {
-		
+		if ( this.gameState != 'generated' ) { throw "Game must be active and Generated.  Someone called when they should not have"; debugger; }
+
+		if ( this.currentTurn == (this.getRound().turns.length - 1) ) {
+			return this.endRound();
+		}
+
+		// Update "Score to Beat"
+		if ( this.getRound().scoreToBeat === false
+			|| this.getRound().scoreToBeat > this.getTurn().currentScore()
+			) {
+			this.getRound().scoreToBeat = this.getTurn().currentScore();
+		}
+
+		// Advance the turn counter
+		this.getTurn().isOver = true;
+		this.currentTurn++;
+	}
+
+	endRound() {
+		if ( this.gameState != 'generated' ) { throw "Game must be active and Generated.  Someone called when they should not have"; debugger; }
+
+		// Sum up each Player's combined score
+		this.getRound().turns.forEach((turn) => turn.player.combinedScore += turn.currentScore());
+
+		///  End here, if this was the last round
+		if ( this.currentRound == (this.roundState.length - 1) ) {
+			return this.gameOver();
+		}
+
+		// Advance the round counter
+		this.currentTurn = 0;
+		this.currentRound++;
+	}
+
+	gameOver() {
+		this.gameState = 'over';
+		console.log(this);
 	}
 }
+
+export class MustKeepAtLeastOneException { constructor() { } }
